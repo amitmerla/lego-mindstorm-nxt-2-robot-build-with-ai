@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>בונים את Alpha Rex</title>
+  <meta name="theme-color" content="#05060a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <!-- ===== Dashboard ===== -->
+  <header class="dash glass">
+    <div class="brand">
+      <div class="brand-mark">R</div>
+      <div>
+        <div class="brand-title">ALPHA REX <b>2.0</b></div>
+        <div class="brand-sub">בונים רובוט ביחד</div>
+      </div>
+    </div>
+
+    <div class="ring-wrap" title="כמה כבר בנית">
+      <svg class="ring" viewBox="0 0 120 120">
+        <defs>
+          <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ff8a00" />
+            <stop offset="1" stop-color="#ff3d71" />
+          </linearGradient>
+        </defs>
+        <circle class="ring-bg" cx="60" cy="60" r="52" />
+        <circle class="ring-fg" id="ringFg" cx="60" cy="60" r="52" />
+      </svg>
+      <div class="ring-label"><span id="pct">0</span><small>%</small></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="k">עמוד</span><span class="v"><b id="statPage">1</b><i>/ 191</i></span></div>
+      <div class="stat"><span class="k">שלב</span><span class="v" id="statSection">—</span></div>
+      <div class="stat"><span class="k">נשארו</span><span class="v"><b id="statLeft">191</b><i>עמודים</i></span></div>
+      <div class="stat"><span class="k">זמן משוער</span><span class="v" id="statEta">—</span></div>
+    </div>
+
+    <div class="pills">
+      <span class="pill" id="pillAi"><i></i><span>AI</span></span>
+      <span class="pill" id="pillMcp"><i></i><span>WebMCP</span></span>
+      <span class="pill" id="pillMic"><i></i><span>קול</span></span>
+    </div>
+
+    <div class="segbar" id="segbar" aria-label="שלבי הבנייה"></div>
+  </header>
+
+  <!-- ===== Main ===== -->
+  <main class="layout">
+    <section class="stage">
+      <div class="stage-head">
+        <div>
+          <div class="eyebrow" id="secEyebrow">שלב 1</div>
+          <h1 id="secTitle">הכירו את Alpha Rex</h1>
+        </div>
+        <button class="ghost" id="btnMap" aria-label="מפת שלבים">🗺️ <span>מפה</span></button>
+      </div>
+
+      <div class="page-frame glass" id="pageFrame">
+        <div class="page-badge" id="pageBadge">1</div>
+        <div class="done-badge" id="doneBadge">✓ עשיתי</div>
+        <div class="page-viewport" id="pageViewport">
+          <img id="pageImg" alt="דף הוראות" draggable="false" />
+        </div>
+        <div class="zoom-hint">לחץ להגדלה 🔍</div>
+      </div>
+
+      <div class="note glass" id="noteCard">
+        <div class="note-ico" id="noteIco">💡</div>
+        <p id="noteText"></p>
+        <button class="icon-btn" id="btnSpeakNote" aria-label="הקרא">🔊</button>
+      </div>
+
+      <nav class="controls">
+        <button class="btn btn-secondary" id="btnPrev">
+          <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+          <span>הקודם</span>
+        </button>
+
+        <button class="mic" id="btnMic" aria-label="דבר איתי">
+          <span class="mic-ring"></span><span class="mic-ring r2"></span>
+          <svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></svg>
+        </button>
+
+        <button class="btn btn-primary" id="btnNext">
+          <span>סיימתי! הבא</span>
+          <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
+        </button>
+      </nav>
+
+      <div class="transcript" id="transcript" aria-live="polite"></div>
+
+      <button class="btn btn-camera" id="btnCamera">
+        <svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z" /><circle cx="12" cy="13" r="3.5" /></svg>
+        <span>צלם את הבנייה שלי – האם זה נכון?</span>
+      </button>
+    </section>
+
+    <!-- ===== Chat ===== -->
+    <aside class="chat glass">
+      <div class="chat-head">
+        <div class="avatar">🤖</div>
+        <div>
+          <div class="chat-title">רקס – העוזר שלך</div>
+          <div class="chat-sub" id="chatSub">שאל אותי כל דבר על הבנייה</div>
+        </div>
+        <button class="ai-btn" id="btnEnableAi" hidden>✨ הפעל AI</button>
+        <button class="icon-btn" id="btnMute" aria-label="השתק קול">🔊</button>
+      </div>
+      <div class="msgs" id="msgs"></div>
+      <div class="chips" id="chips">
+        <button>מה זה הסמל הצהוב?</button>
+        <button>איזה חלקים צריך פה?</button>
+        <button>החלק לא נכנס</button>
+        <button>איך יודעים את האורך?</button>
+        <button>לאן הכבל הולך?</button>
+      </div>
+      <form class="composer" id="composer">
+        <input id="chatInput" autocomplete="off" placeholder="כתוב שאלה… או לחץ על המיקרופון" />
+        <button class="send" aria-label="שלח"><svg viewBox="0 0 24 24"><path d="M20 12L4 4l3 8-3 8z" /></svg></button>
+      </form>
+    </aside>
+  </main>
+
+  <!-- ===== Dev log (Cursor-style) ===== -->
+  <section class="devlog" id="devlog">
+    <div class="devlog-bar" id="devlogBar">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="devlog-title">⌘ מאחורי הקלעים <code>agent.log</code></span>
+      <span class="devlog-filters" id="logFilters"></span>
+      <span class="devlog-count" id="logCount">0</span>
+      <button class="icon-btn" id="btnLogToggle" aria-label="פתח לוג">▴</button>
+    </div>
+    <div class="devlog-body" id="logBody" dir="ltr"></div>
+  </section>
+
+  <!-- ===== Section map ===== -->
+  <dialog class="sheet" id="mapSheet">
+    <div class="sheet-head"><h2>מפת הבנייה</h2><button class="icon-btn" data-close>✕</button></div>
+    <div class="map-grid" id="mapGrid"></div>
+  </dialog>
+
+  <!-- ===== Camera ===== -->
+  <dialog class="sheet camera" id="camSheet">
+    <div class="sheet-head"><h2>📷 בודקים את הבנייה</h2><button class="icon-btn" data-close>✕</button></div>
+    <div class="cam-body">
+      <div class="cam-col">
+        <div class="cam-label">הבנייה שלך</div>
+        <div class="cam-view">
+          <video id="camVideo" playsinline muted></video>
+          <img id="camShot" alt="" hidden />
+          <div class="scanline" id="scanline" hidden></div>
+        </div>
+      </div>
+      <div class="cam-col">
+        <div class="cam-label">איך זה צריך להיראות</div>
+        <div class="cam-view ref"><img id="camRef" alt="" /></div>
+      </div>
+    </div>
+    <div class="cam-result" id="camResult" hidden></div>
+    <div class="cam-actions">
+      <label class="btn btn-secondary" id="camUpload">
+        <input type="file" accept="image/*" capture="environment" hidden id="camFile" />בחר תמונה
+      </label>
+      <button class="btn btn-primary shutter" id="camShoot"><span>📸 צלם ובדוק</span></button>
+      <button class="btn btn-secondary" id="camRetake" hidden>צלם שוב</button>
+    </div>
+  </dialog>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
